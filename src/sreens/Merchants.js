@@ -10,7 +10,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { connect } from "react-redux";
 
 const Merchants = ({ data, navigation }) => {
-  console.log(data);
+  // console.log(data);
   return (
     <View>
       <FlatList

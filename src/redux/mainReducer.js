@@ -1,5 +1,6 @@
 const initialState = {
   merchant: null,
+  scannedMerchant: null
 };
 
 const mainReducer = (state = initialState, action) => {
@@ -9,6 +10,12 @@ const mainReducer = (state = initialState, action) => {
         ...state,
         merchant: action.payload,
       };
+
+      case "SCANNED_MERCHANTS":
+        return {
+          ...state,
+          scannedMerchant: action.payload,
+        };
     default:
       return state;
   }

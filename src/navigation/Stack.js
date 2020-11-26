@@ -11,6 +11,7 @@ import Merchants from "../sreens/Merchants";
 import Details from "../sreens/MerchantDetail";
 import { connect } from "react-redux";
 import Profile from "../sreens/Profile";
+import Result from "../sreens/Result";
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ const Root = ({ isLoggedIn }) => {
           <Stack.Screen name="merchants" component={Merchants}  />
           <Stack.Screen name="details" component={Details}  />
           <Stack.Screen name="scanner" component={Scanner} options={{headerShown:false}} />
+          <Stack.Screen name="result" component={Result} options={{headerShown:false}} />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>

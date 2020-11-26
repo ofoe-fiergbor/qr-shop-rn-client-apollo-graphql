@@ -20,5 +20,12 @@ export const userMerchants = (data) => {
   };
 };
 
+export const scanMerchants = (data) => {
+  return {
+    type: "SCANNED_MERCHANTS",
+    payload: data,
+  };
+};
+
 
 
