@@ -39,6 +39,12 @@ const Result = ({ route, navigation }) => {
     // console.log(selectArr);
   }
 
+  const items = [...new Set(selectedItem)];
+
+  const deleteSelectedItem = (item) => {
+    setSelectedItem(items.filter((i) => i.id !== item.id));
+  };
+
   const resultRender = !merchant ? (
     <View style={styles.errorMode}>
       <AntDesign name="qrcode" size={250} color="grey" />
@@ -62,18 +68,23 @@ const Result = ({ route, navigation }) => {
       ListFooterComponent={() => (
         <View>
           <ScrollView>
-            {[...new Set(selectedItem)].map((item, index) => {
+            {items.map((item, index) => {
               return (
                 <View key={index} style={styles.selectedItem}>
                   <Text style={styles.itemName}>{item.itemName}</Text>
                   <Text style={styles.itemPrice}>{item.price}.00</Text>
-                  <AntDesign name="close" size={24} color="black" />
+                  <TouchableOpacity onPress={() => deleteSelectedItem(item)}>
+                    <AntDesign name="close" size={24} color="black" />
+                  </TouchableOpacity>
                 </View>
               );
             })}
           </ScrollView>
           {selectedItem.length > 0 && (
-            <TouchableOpacity style={styles.checkOutBtn}>
+            <TouchableOpacity
+              style={styles.checkOutBtn}
+              onPress={() => navigation.navigate("checkout", { items })}
+            >
               <Text style={styles.checkOutTxt}>Proceed to checkout</Text>
             </TouchableOpacity>
           )}
@@ -183,6 +194,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingVertical: 2,
   },
   itemName: {
     flex: 4,

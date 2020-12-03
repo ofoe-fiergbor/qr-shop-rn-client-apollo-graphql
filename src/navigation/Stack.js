@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { connect } from "react-redux";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../sreens/Home";
 import Welcome from "../sreens/Welcome";
@@ -9,9 +10,9 @@ import Register from "../sreens/Register";
 import Scanner from "../sreens/Scanner";
 import Merchants from "../sreens/Merchants";
 import Details from "../sreens/MerchantDetail";
-import { connect } from "react-redux";
 import Profile from "../sreens/Profile";
 import Result from "../sreens/Result";
+import Checkout from "../sreens/Checkout";
 
 const Stack = createStackNavigator();
 
@@ -20,12 +21,29 @@ const Root = ({ isLoggedIn }) => {
     <NavigationContainer>
       {isLoggedIn ? (
         <Stack.Navigator>
-          <Stack.Screen name="home" component={Home} options={{headerShown:false}} />
-          <Stack.Screen name="profile" component={Profile}  />
-          <Stack.Screen name="merchants" component={Merchants}  />
-          <Stack.Screen name="details" component={Details}  />
-          <Stack.Screen name="scanner" component={Scanner} options={{headerShown:false}} />
-          <Stack.Screen name="result" component={Result} options={{headerShown:false}} />
+          <Stack.Screen
+            name="home"
+            component={Home}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="profile" component={Profile} />
+          <Stack.Screen name="merchants" component={Merchants} />
+          <Stack.Screen name="details" component={Details} />
+          <Stack.Screen
+            name="scanner"
+            component={Scanner}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="result"
+            component={Result}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="checkout"
+            component={Checkout}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>
