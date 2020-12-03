@@ -5,8 +5,6 @@ export const login = (data) => {
   };
 };
 
-
-
 export const logout = () => {
   return {
     type: "LOGOUT",
@@ -27,5 +25,9 @@ export const scanMerchants = (data) => {
   };
 };
 
-
-
+export const selectItems = (data) => {
+  return {
+    type: "SELECTED_ITEMS",
+    payload: data,
+  };
+};

@@ -18,7 +18,9 @@ const Merchants = ({ data, navigation }) => {
         itme
         renderItem={({ item }) => {
           return (
-            <TouchableWithoutFeedback onPress={()=>navigation.navigate('details',{item})}>
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate("details", { item })}
+            >
               <View style={styles.merchantCard}>
                 <Text style={styles.text}>{item.name}</Text>
                 <AntDesign name="right" size={24} color="black" />

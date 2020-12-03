@@ -1,6 +1,7 @@
 const initialState = {
   merchant: null,
-  scannedMerchant: null
+  scannedMerchant: null,
+  selectedItems: [],
 };
 
 const mainReducer = (state = initialState, action) => {
@@ -11,11 +12,17 @@ const mainReducer = (state = initialState, action) => {
         merchant: action.payload,
       };
 
-      case "SCANNED_MERCHANTS":
-        return {
-          ...state,
-          scannedMerchant: action.payload,
-        };
+    case "SCANNED_MERCHANTS":
+      return {
+        ...state,
+        scannedMerchant: action.payload,
+      };
+
+    case "SELECTED_ITEMS":
+      return {
+        ...state,
+        selectedItems: state.selectedItems.concat(action.payload),
+      };
     default:
       return state;
   }

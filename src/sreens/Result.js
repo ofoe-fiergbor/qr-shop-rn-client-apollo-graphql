@@ -1,26 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   StyleSheet,
   FlatList,
   Image,
-  Activi,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { FETCH_ALL_MERCHANTS } from "../graphql/merchant";
 import { useQuery } from "@apollo/client";
-import { connect } from "react-redux";
 
-import { scanMerchants } from "../redux/action";
-
-const Result = ({ route, navigation, scanMerchants, scannedMerchant }) => {
+const Result = ({ route, navigation }) => {
   const { data } = route.params;
 
   const allMerchants = useQuery(FETCH_ALL_MERCHANTS);
+  const [selectedItem, setSelectedItem] = useState([]);
 
   const checkForHexRegExp = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
 
@@ -29,8 +26,19 @@ const Result = ({ route, navigation, scanMerchants, scannedMerchant }) => {
     allMerchants.data &&
     allMerchants.data.getMerchants.filter((item) => item.id === data);
 
-  // const { createdAt, email, id, items, likes, name, username } = merchant[0];
-  // console.log(merchant)
+  var selectArr = [];
+  var index;
+  function onSelect(item) {
+    if (selectArr.includes(item)) {
+      index = selectArr.indexOf(item);
+      selectArr.splice(index, 1);
+    } else {
+      selectArr.push(item);
+    }
+
+    // console.log(selectArr);
+  }
+
   const resultRender = !merchant ? (
     <View style={styles.errorMode}>
       <AntDesign name="qrcode" size={250} color="grey" />
@@ -51,35 +59,60 @@ const Result = ({ route, navigation, scanMerchants, scannedMerchant }) => {
         <Text style={styles.merchantName}>{merchant[0].name}</Text>
       )}
       data={merchant[0].items}
-      renderItem={({ item }) => {
+      ListFooterComponent={() => (
+        <View>
+          <ScrollView>
+            {[...new Set(selectedItem)].map((item, index) => {
+              return (
+                <View key={index} style={styles.selectedItem}>
+                  <Text style={styles.itemName}>{item.itemName}</Text>
+                  <Text style={styles.itemPrice}>{item.price}.00</Text>
+                  <AntDesign name="close" size={24} color="black" />
+                </View>
+              );
+            })}
+          </ScrollView>
+          {selectedItem.length > 0 && (
+            <TouchableOpacity style={styles.checkOutBtn}>
+              <Text style={styles.checkOutTxt}>Proceed to checkout</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
+      renderItem={({ item, index }) => {
         return (
-          <TouchableWithoutFeedback>
-            <View style={styles.itemContainer}>
-              <Image
-                style={styles.itemImage}
-                source={require("../component/assets/matthew.png")}
-              />
-              <View style={{ justifyContent: "center" }}>
-                <Text style={styles.name}>{item.itemName}</Text>
-                <Text style={styles.price}>GHC {item.price}</Text>
-              </View>
+          <TouchableOpacity
+            style={styles.itemContainer}
+            onPress={() => {
+              onSelect(item), setSelectedItem((prev) => [...prev, item]);
+            }}
+          >
+            <Image
+              style={styles.itemImage}
+              source={require("../component/assets/matthew.png")}
+            />
+            <View style={{ justifyContent: "center" }}>
+              <Text style={styles.name}>{item.itemName}</Text>
+              <Text style={styles.price}>GHC {item.price}</Text>
             </View>
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
         );
       }}
+      keyExtractor={(item) => item.id}
+      extraData={selectArr}
     />
   );
   return (
-    <View style={{ paddingVertical: 40, paddingHorizontal: 20 }}>
+    <View style={{ paddingVertical: 40 }}>
       <TouchableOpacity
         onPress={() => navigation.navigate("home")}
-        style={{ alignSelf: "flex-end" }}
+        style={{ alignSelf: "flex-end", marginRight: 20 }}
       >
         <AntDesign name="close" size={40} color="black" />
       </TouchableOpacity>
 
       {allMerchants.loading ? (
-        <ActivityIndicator />
+        <ActivityIndicator color="teal" size="large" />
       ) : (
         <View>{resultRender}</View>
       )}
@@ -87,12 +120,7 @@ const Result = ({ route, navigation, scanMerchants, scannedMerchant }) => {
   );
 };
 
-function mstp(state) {
-  return {
-    scannedMerchant: state.main.scannedMerchant,
-  };
-}
-export default connect(mstp, { scanMerchants })(Result);
+export default Result;
 
 const styles = StyleSheet.create({
   itemContainer: {
@@ -132,5 +160,34 @@ const styles = StyleSheet.create({
     marginTop: 40,
     justifyContent: "center",
     alignItems: "center",
+  },
+  checkOutBtn: {
+    alignSelf: "center",
+    backgroundColor: "teal",
+    height: 60,
+    width: 200,
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  checkOutTxt: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  categoryselectedStyle: {
+    backgroundColor: "orange",
+  },
+  selectedItem: {
+    paddingHorizontal: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  itemName: {
+    flex: 4,
+  },
+  itemPrice: {
+    flex: 1,
   },
 });
