@@ -44,6 +44,11 @@ const Result = ({ route, navigation }) => {
   const deleteSelectedItem = (item) => {
     setSelectedItem(items.filter((i) => i.id !== item.id));
   };
+  const format = (amount) => {
+    return Number(amount)
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, "$&,");
+  };
 
   const resultRender = !merchant ? (
     <View style={styles.errorMode}>
@@ -72,7 +77,7 @@ const Result = ({ route, navigation }) => {
               return (
                 <View key={index} style={styles.selectedItem}>
                   <Text style={styles.itemName}>{item.itemName}</Text>
-                  <Text style={styles.itemPrice}>{item.price}.00</Text>
+                  <Text style={styles.itemPrice}>{format(item.price)}</Text>
                   <TouchableOpacity onPress={() => deleteSelectedItem(item)}>
                     <AntDesign name="close" size={24} color="black" />
                   </TouchableOpacity>
@@ -104,7 +109,7 @@ const Result = ({ route, navigation }) => {
             />
             <View style={{ justifyContent: "center" }}>
               <Text style={styles.name}>{item.itemName}</Text>
-              <Text style={styles.price}>GHC {item.price}</Text>
+              <Text style={styles.price}>GHC {format(item.price)}</Text>
             </View>
           </TouchableOpacity>
         );

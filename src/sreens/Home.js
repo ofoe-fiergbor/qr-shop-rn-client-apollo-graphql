@@ -1,31 +1,12 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  ScrollView,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { connect } from "react-redux";
 
 import Navbar from "../component/Navbar";
 
 const Home = ({ navigation, user }) => {
-  const {
-    container,
-    hello,
-    name,
-    qrbutn,
-    introTextContainter,
-    formContainer,
-    input,
-    search,
-    emptyBody,
-    emptyBodyText,
-  } = styles;
+  const { container, hello, name, qrbutn, introTextContainter } = styles;
   return (
     <View style={container}>
       <Navbar navigation={navigation} />
@@ -41,6 +22,22 @@ const Home = ({ navigation, user }) => {
         >
           <AntDesign name="qrcode" size={24} color="#fff" />
         </TouchableOpacity>
+      </View>
+
+      <View
+        style={{
+          height: 350,
+          marginTop: 40,
+          alignItems: "center",
+        }}
+      >
+        <Image
+          source={require("../component/assets/undraw_Fingerprint_re_uf3f.png")}
+          style={{ height: 250, width: "100%" }}
+        />
+        <Text style={{ color: "#6C63FF", fontSize: 30, fontWeight: "bold" }}>
+          Scan a valid QR
+        </Text>
       </View>
     </View>
   );

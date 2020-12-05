@@ -1,5 +1,4 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -26,9 +25,24 @@ const Root = ({ isLoggedIn }) => {
             component={Home}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="profile" component={Profile} />
-          <Stack.Screen name="merchants" component={Merchants} />
-          <Stack.Screen name="details" component={Details} />
+          <Stack.Screen
+            name="profile"
+            component={Profile}
+            options={{ headerTitle: "Profile", headerTitleAlign: "center" }}
+          />
+          <Stack.Screen
+            name="merchants"
+            component={Merchants}
+            options={{ headerTitle: "Merchants", headerTitleAlign: "center" }}
+          />
+          <Stack.Screen
+            name="details"
+            component={Details}
+            options={{
+              headerTitle: "Merchant Menu",
+              headerTitleAlign: "center",
+            }}
+          />
           <Stack.Screen
             name="scanner"
             component={Scanner}
@@ -42,14 +56,26 @@ const Root = ({ isLoggedIn }) => {
           <Stack.Screen
             name="checkout"
             component={Checkout}
-            options={{ headerShown: false }}
+            options={{ headerTitle: "Checkout", headerTitleAlign: "center" }}
           />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>
-          <Stack.Screen name="welcome" component={Welcome} />
-          <Stack.Screen name="login" component={Login} />
-          <Stack.Screen name="register" component={Register} />
+          <Stack.Screen
+            name="welcome"
+            component={Welcome}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="register"
+            component={Register}
+          />
         </Stack.Navigator>
       )}
     </NavigationContainer>

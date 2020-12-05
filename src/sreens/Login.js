@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   View,
   Text,
+  Image,
   TextInput,
   TouchableOpacity,
   StyleSheet,
@@ -15,8 +16,6 @@ import { connect } from "react-redux";
 import { LOGIN_WITH_EMAIL_AND_PASSWORD } from "../graphql/login";
 
 const Login = ({ navigation, login }) => {
-
-
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -49,54 +48,81 @@ const Login = ({ navigation, login }) => {
 
   return (
     <View style={style.container}>
-      <Text>Register</Text>
-
-      <View>
-        <TextInput
-          placeholder="Email..."
-          value={values.email}
-          keyboardType="email-address"
-          onChangeText={(text) => onChange("email", text)}
-          style={style.formInput}
-        />
-        <TextInput
-          placeholder="Password..."
-          secureTextEntry={true}
-          value={values.password}
-          keyboardType="default"
-          onChangeText={(text) => onChange("password", text)}
-          style={style.formInput}
-        />
-      </View>
-
-      <TouchableOpacity style={style.registerButton} onPress={onSubmit}>
-        <Text style={style.registerButtonText}>Login</Text>
-      </TouchableOpacity>
-
-      {Object.keys(errors).length > 0 && (
-        <View style={style.errContainer}>
-          {Object.values(errors).map((err) => (
-            <Text key={err} style={style.errText}>
-              {err}
-            </Text>
-          ))}
-        </View>
-      )}
-
-      <View
+      <Image
+        source={require("../component/assets/david-dvoracek-QiPe0UpC0_U-unsplash.jpg")}
         style={{
-          flexDirection: "row",
-          marginTop: 10,
-          width: "65%",
-          justifyContent: "space-between",
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+        }}
+      />
+
+      <Text
+        style={{
+          marginBottom: 40,
+          fontSize: 40,
+          color: "#fff",
         }}
       >
-        <Text>Don't have an account?</Text>
-        <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("register")}
+        Login
+      </Text>
+      <View
+        style={{
+          paddingHorizontal: 20,
+          backgroundColor: "#FFFFFF",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingVertical: 40,
+        }}
+      >
+        <View>
+          <TextInput
+            placeholder="Email..."
+            value={values.email}
+            keyboardType="email-address"
+            onChangeText={(text) => onChange("email", text)}
+            style={style.formInput}
+          />
+          <TextInput
+            placeholder="Password..."
+            secureTextEntry={true}
+            value={values.password}
+            keyboardType="default"
+            onChangeText={(text) => onChange("password", text)}
+            style={style.formInput}
+          />
+        </View>
+
+        <TouchableOpacity style={style.registerButton} onPress={onSubmit}>
+          <Text style={style.registerButtonText}>Login</Text>
+        </TouchableOpacity>
+
+        {Object.keys(errors).length > 0 && (
+          <View style={style.errContainer}>
+            {Object.values(errors).map((err) => (
+              <Text key={err} style={style.errText}>
+                {err}
+              </Text>
+            ))}
+          </View>
+        )}
+
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 10,
+            width: "65%",
+            justifyContent: "space-between",
+          }}
         >
-          <Text style={{ color: "navy", fontWeight: "bold" }}>Register</Text>
-        </TouchableWithoutFeedback>
+          <Text>Don't have an account?</Text>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate("register")}
+          >
+            <Text style={{ color: "navy", fontWeight: "bold" }}>Register</Text>
+          </TouchableWithoutFeedback>
+        </View>
       </View>
     </View>
   );
@@ -107,7 +133,7 @@ export default connect(null, { login })(Login);
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     alignItems: "center",
     justifyContent: "center",
   },

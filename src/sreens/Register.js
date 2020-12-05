@@ -4,17 +4,15 @@ import { useMutation } from "@apollo/client";
 import {
   View,
   Text,
+  Image,
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from "react-native";
-
-
 
 import { REGISTER_NEW_USER } from "../graphql/register";
 import { login } from "../redux/action";
-
 
 const Register = ({ navigation, login }) => {
   const [values, setValues] = useState({
@@ -45,70 +43,98 @@ const Register = ({ navigation, login }) => {
     registerUser();
   };
 
-
-
-
-
-
   return (
     <View style={style.container}>
-      <Text>Register</Text>
-
-      <View>
-        <TextInput
-          placeholder="Username..."
-          value={values.username}
-          keyboardType="default"
-          onChangeText={(text) => onChange("username", text)}
-          style={style.formInput}
-        />
-        <TextInput
-          placeholder="Email..."
-          value={values.email}
-          keyboardType="email-address"
-          onChangeText={(text) => onChange("email", text)}
-          style={style.formInput}
-        />
-        <TextInput
-          placeholder="Password..."
-          secureTextEntry={true}
-          value={values.password}
-          keyboardType="default"
-          onChangeText={(text) => onChange("password", text)}
-          style={style.formInput}
-        />
-        <TextInput
-          placeholder="Confirm password..."
-          value={values.confirmPassword}
-          secureTextEntry={true}
-          keyboardType="default"
-          onChangeText={(text) => onChange("confirmPassword", text)}
-          style={style.formInput}
-        />
-      </View>
-
-      <TouchableOpacity style={style.registerButton} onPress={onSubmit}>
-        <Text style={style.registerButtonText}>Register</Text>
-      </TouchableOpacity>
-
-      {Object.keys(errors).length > 0 && (
-        <View style={style.errContainer}>
-          {Object.values(errors).map((err) => (
-            <Text key={err} style={style.errText}>
-              {err}
-            </Text>
-          ))}
+      <Image
+        source={require("../component/assets/david-dvoracek-QiPe0UpC0_U-unsplash.jpg")}
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+        }}
+      />
+      <Text
+        style={{
+          marginBottom: 40,
+          fontSize: 40,
+          color: "#fff",
+        }}
+      >
+        Register
+      </Text>
+      <View
+        style={{
+          paddingHorizontal: 20,
+          backgroundColor: "#FFFFFF",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingVertical: 40,
+        }}
+      >
+        <View>
+          <TextInput
+            placeholder="Username..."
+            value={values.username}
+            keyboardType="default"
+            onChangeText={(text) => onChange("username", text)}
+            style={style.formInput}
+          />
+          <TextInput
+            placeholder="Email..."
+            value={values.email}
+            keyboardType="email-address"
+            onChangeText={(text) => onChange("email", text)}
+            style={style.formInput}
+          />
+          <TextInput
+            placeholder="Password..."
+            secureTextEntry={true}
+            value={values.password}
+            keyboardType="default"
+            onChangeText={(text) => onChange("password", text)}
+            style={style.formInput}
+          />
+          <TextInput
+            placeholder="Confirm password..."
+            value={values.confirmPassword}
+            secureTextEntry={true}
+            keyboardType="default"
+            onChangeText={(text) => onChange("confirmPassword", text)}
+            style={style.formInput}
+          />
         </View>
-      )}
 
-      
-      <View style={{flexDirection:'row', marginTop: 10, width:'65%', justifyContent:'space-between'}} >
-        <Text>Already have an account?</Text>
-        <TouchableWithoutFeedback onPress={()=> navigation.navigate('login')}>
-          <Text style={{color:'navy', fontWeight:'bold'}}>Login</Text>
-        </TouchableWithoutFeedback>
+        <TouchableOpacity style={style.registerButton} onPress={onSubmit}>
+          <Text style={style.registerButtonText}>Register</Text>
+        </TouchableOpacity>
+
+        {Object.keys(errors).length > 0 && (
+          <View style={style.errContainer}>
+            {Object.values(errors).map((err) => (
+              <Text key={err} style={style.errText}>
+                {err}
+              </Text>
+            ))}
+          </View>
+        )}
+
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 10,
+            width: "65%",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text>Already have an account?</Text>
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate("login")}
+          >
+            <Text style={{ color: "navy", fontWeight: "bold" }}>Login</Text>
+          </TouchableWithoutFeedback>
+        </View>
       </View>
-
     </View>
   );
 };
@@ -118,7 +144,6 @@ export default connect(null, { login })(Register);
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
     alignItems: "center",
     justifyContent: "center",
   },
